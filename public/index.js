@@ -83,7 +83,7 @@ $(function() {
 
         //query += 'select ' + fieldList + ' from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
         query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + " where" ; 
-          if (criteria.animal > 0){
+          if (criteria.animal == -1){
             query += " SpeciesID = " +  criteria.animal;
           }
 
