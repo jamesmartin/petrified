@@ -81,7 +81,8 @@ $(function() {
             fieldList = '*',
             tableName = '480010';
 
-        query += 'select ' + fieldList + ' from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
+        //query += 'select ' + fieldList + ' from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
+        query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
 
         if (criteria.name) {
             query += ' and AnimalName = "' + criteria.name + '" ';
