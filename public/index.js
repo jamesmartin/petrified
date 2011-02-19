@@ -74,6 +74,8 @@ $(function() {
     function buildQuery() {
     
     var species = $("#animal option:selected").val()
+    var color = $("#color").val().split(',')[0]
+    var breed = $("#breed").val().split(',')[0]
 
         
         var query = '', i,
@@ -88,8 +90,16 @@ $(function() {
           }
 
         if (criteria.name) {
-            query += " and AnimalName contains '"+ criteria.name + "'";
+            query += " and AnimalName contains ignoring case '"+ criteria.name + "'";
         }
+        
+        if (color) {
+            query += " and ColourName contains ignoring case '" + color + "'";
+        }
+        if (breed) {
+            query += " and BreedName contains ignoring case '" + breed + "'";
+        }
+        
 
         function addList(name) {
             var lst = [];
@@ -105,7 +115,7 @@ $(function() {
             }
         }
 
-        addList('breed');
+        //addList('breed');
         addList('color');
         
         return query;
