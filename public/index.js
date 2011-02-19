@@ -63,8 +63,8 @@ $(function() {
          });
     }
 
-    $('#animal-cat, #animal-dog').change(function() {
-         criteria.animal = this.id === 'animal-cat' ? 1 : 2;
+    $('#animal').change(function() {
+         criteria.animal = $(this).val(); 
     });
 
     initAutocomplete('breed', '478879', 'breedName', 'breed');
@@ -82,10 +82,13 @@ $(function() {
             tableName = '480010';
 
         //query += 'select ' + fieldList + ' from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
-        query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
+        query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + " where" ; 
+          if (criteria.animal > 0){
+            query += " SpeciesID = " +  criteria.animal;
+          }
 
         if (criteria.name) {
-            query += ' and AnimalName = "' + criteria.name + '" ';
+            query += " and AnimalName contains '"+ criteria.name + "'";
         }
 
         function addList(name) {
@@ -142,7 +145,7 @@ $(function() {
           alert("Geocode was not successful for the following reason: " + status);
         }})
 
-        alert(buildQuery());
+      //console.log(buildQuery());
         layer.setQuery(buildQuery());
     });
 
