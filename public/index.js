@@ -51,17 +51,36 @@ $(function() {
         criteria.name = $(this).val();
     });
 
-    $('#search').button().click(function() {
+    function buildQuery() {
+
         var query = '', i;
-        query += 'select * from x where ';
+
+        query += 'select * from x where animalType = "' +  criteria.animal + '" ';
 
         if (criteria.name) {
-            query += 'name = "' + criteria.name + '"';
+            query += ' name = "' + criteria.name + '" ';
         }
 
-        if (criteria.breed.length) {
+        function addList(name) {
+            var lst = [];
+
+            if (criteria[name].length) {
+                for (i = 0; i < criteria[name].length; i += 1) {
+                    if (criteria[name][i]) {
+                        lst.push(name + ' = "' + criteria[name][i] + '" ');
+                    }
+                }
+                query += lst.join(' or ');
+            }
         }
 
-        alert(query);
+        addList('breed');
+        addList('color');
+        
+        return query;
+    }
+
+    $('#search').button().click(function() {
+        alert(buildQuery());
     });
 });
