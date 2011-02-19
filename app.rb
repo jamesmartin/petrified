@@ -6,7 +6,7 @@ class Petrified < Sinatra::Base
   set :public, File.join(File.dirname(__FILE__), 'public')
   
   get '/' do
-    'Petrified!'
+    [200, {"Content-Type" => "text/html"}, File.open('public/index.html')]
   end
 
 end
