@@ -82,9 +82,9 @@ $(function() {
             tableName = '480010';
 
         //query += 'select ' + fieldList + ' from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
-        query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + " where" ; 
-          if (criteria.animal == -1){
-            query += " SpeciesID = " +  criteria.animal;
+        query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + " where BreedID > 0"; 
+          if (criteria.animal == -1) {
+            query += " and SpeciesID = " +  criteria.animal;
           }
 
         if (criteria.name) {
@@ -145,7 +145,7 @@ $(function() {
           alert("Geocode was not successful for the following reason: " + status);
         }})
 
-      //console.log(buildQuery());
+console.log(buildQuery());
         layer.setQuery(buildQuery());
     });
 
