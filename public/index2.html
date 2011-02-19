@@ -1,0 +1,75 @@
+<html>
+  <head>
+   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+	<script type="text/javascript" charset="utf-8">
+	
+		var geocoder;
+		var layer;
+		var map;
+		
+		
+		window.onload = function() {
+			
+			geocoder = new google.maps.Geocoder();
+			
+			var myLatlng = new google.maps.LatLng(-33,149);
+			var myOptions = {
+			  zoom: 4,
+			  center: myLatlng,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+			
+			map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+			
+			
+			layer = new google.maps.FusionTablesLayer(480010, {
+				
+			});
+			
+			layer.setMap(map);
+			
+			
+			//
+			var p = document.getElementById('postcode');
+			
+			p.onblur = function() {
+				
+				geocoder.geocode( { 'address': p.value + ', Australia'}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						map.setCenter(results[0].geometry.location);
+
+					} else {
+						alert("Geocode was not successful for the following reason: " + status);
+					}
+				});
+				
+			}
+			
+		}
+		
+		function updateQuery() {
+			// from ui
+			
+			
+			
+			layer.setQuery("");
+			
+			
+		}
+	</script>
+	
+  </head>
+
+  <body>
+	
+	
+	<div id="map_canvas" style="width: 500px; height: 500px;"></div>
+	
+	<label for="postcode">Postcode</label><input type="text" name="postcode" value="" id="postcode">
+	
+	<label for=""></label><input type="button" name="" value="" id="">
+	
+
+
+  </body>
+</html>
