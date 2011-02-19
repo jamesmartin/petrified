@@ -1,20 +1,35 @@
-
+body {
+	font-size: 65%;	
+}
 #map {
-    width: 500px;
+    width: 700px;
     height: 500px;
     float: left;
     border: 1px solid black;
+	margin-right: 10px;
+}
+#logo {
+	margin-bottom: 10px	
 }
 
 label {
     display: inline-block;
-    width: 200px;
+    width: 100px;
 }
 
 input, select {
-    width: 200px;
+    width: 180px;
 }
 
 input[type=radio] {
-    width: 50px;
+    width: 30px;
+}
+
+div.ui-widget {
+	padding: 3px;
+}
+#search {
+	display:inline-block;
+	width: 290px;
+	margin-top: 10px	
 }

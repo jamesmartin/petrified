@@ -14,8 +14,10 @@ $(function() {
 	function extractLast( term ) {
         return split( term ).pop();
 	}
+	
 
-    function initAutocomplete(id, url, field) {
+
+    function initAutocomplete(id, table, filterName, field) {
 
         var tags = ['123', '1234', '12345'];
 
@@ -27,10 +29,19 @@ $(function() {
 	     })
          .autocomplete({
 			 source: function( request, response ) {
-			     // $.getJSON( url, {
-			     //    	term: extractLast( request.term )
-			     //    }, response );
-                 response( $.ui.autocomplete.filter(tags, extractLast( request.term ) ) );
+			     $.getJSON( 'https://www.google.com/fusiontables/api/query?sql='
+				             + encodeURIComponent('SELECT * FROM ' + table + ' where '+ filterName + ' like "%' + extractLast( request.term ) +'%"') + '&jsonCallback=?'
+							 //+ encodeURIComponent('SELECT * FROM ' + table) + '&jsonCallback=?'
+							 , {	
+	
+			         }, function(data) {
+						     var lst = [], i;
+							 for (i = 0; i < data.table.rows.length; i += 1) {
+								 lst.push(data.table.rows[i][1]);
+								 }
+						     response(lst);
+						 });
+                 //response( $.ui.autocomplete.filter(tags, extractLast( request.term ) ) );
 			 },
              focus: function() {return false; },
 			 select: function( event, ui ) {
@@ -48,8 +59,8 @@ $(function() {
          criteria.animal = this.id === 'animal-cat' ? 1 : 2;
     });
 
-    initAutocomplete('breed', '', 'breed');
-    initAutocomplete('color', '', 'color');
+    initAutocomplete('breed', '478879', 'breedName', 'breed');
+    initAutocomplete('color', '478783', 'colorName', 'color');
 
     $('#name').change(function(){
         criteria.name = $(this).val();
