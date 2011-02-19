@@ -36,10 +36,17 @@ $(function() {
 							 , {	
 	
 			         }, function(data) {
-						     var lst = [], i;
+						     var lst = [], i, name, a = extractLast(request.term);
 							 for (i = 0; i < data.table.rows.length; i += 1) {
-                 ids[data.table.rows[i][1]] = data.table.rows[i][0];
-								 lst.push(data.table.rows[i][1]);
+                            
+                                    ids[data.table.rows[i][1]] = data.table.rows[i][0];
+							    
+                                name = data.table.rows[i][1];
+                                 if (name.toLowerCase().indexOf(a.toLowerCase()) !== 0) {
+                                   	  continue;
+                                 }
+                             	
+                                  lst.push(data.table.rows[i][1]);
 								 }
 						     response(lst);
 						 });
@@ -74,8 +81,8 @@ $(function() {
     function buildQuery() {
     
     var species = $("#animal option:selected").val()
-    var color = $("#color").val().split(',')[0]
-    var breed = $("#breed").val().split(',')[0]
+    var color = $("#color").text().split(',')[0]
+    var breed = $("#breed").text().split(',')[0]
 
         
         var query = '', i,
