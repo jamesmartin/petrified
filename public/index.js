@@ -63,9 +63,6 @@ $(function() {
          });
     }
 
-    $('#animal').change(function() {
-         criteria.animal = $(this).val(); 
-    });
 
     initAutocomplete('breed', '478879', 'breedName', 'breed');
     initAutocomplete('color', '478783', 'colorName', 'color');
@@ -75,6 +72,8 @@ $(function() {
     });
 
     function buildQuery() {
+    
+    var species = $("#animal option:selected").val()
 
         
         var query = '', i,
@@ -83,8 +82,9 @@ $(function() {
 
         //query += 'select ' + fieldList + ' from ' + tableName + ' where SpeciesID = ' +  criteria.animal + ' ';
         query += 'select AnimalLocation, AnimalName, ColourName, BreedName, SpeciesName from ' + tableName + " where BreedID > 0"; 
-          if (criteria.animal == -1) {
-            query += " and SpeciesID = " +  criteria.animal;
+      console.log(species);
+          if (species!= 'NO') {
+            query += " and SpeciesID = " +  species;
           }
 
         if (criteria.name) {
