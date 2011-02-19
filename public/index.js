@@ -44,6 +44,10 @@ $(function() {
          });
     }
 
+    $('#animal-cat, #animal-dog').change(function() {
+         criteria.animal = this.id === 'animal-cat' ? 1 : 2;
+    });
+
     initAutocomplete('breed', '', 'breed');
     initAutocomplete('color', '', 'color');
 
@@ -53,24 +57,27 @@ $(function() {
 
     function buildQuery() {
 
-        var query = '', i;
+        var query = '', i,
+            fieldList = '*',
+            tableName = 'x';
 
-        query += 'select * from x where animalType = "' +  criteria.animal + '" ';
+        query += 'select ' + fieldList + ' from ' + tableName + ' where animalType = "' +  criteria.animal + '" ';
 
         if (criteria.name) {
-            query += ' name = "' + criteria.name + '" ';
+            query += ' and name = "' + criteria.name + '" ';
         }
 
         function addList(name) {
             var lst = [];
 
             if (criteria[name].length) {
+                query += ' and (';
                 for (i = 0; i < criteria[name].length; i += 1) {
                     if (criteria[name][i]) {
                         lst.push(name + ' = "' + criteria[name][i] + '" ');
                     }
                 }
-                query += lst.join(' or ');
+                query += lst.join(' or ') + ') ';
             }
         }
 
@@ -83,4 +90,5 @@ $(function() {
     $('#search').button().click(function() {
         alert(buildQuery());
     });
+
 });
